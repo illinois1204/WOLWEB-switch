@@ -1,0 +1,18 @@
+<div id="add-device-modal" class="modal">
+    <div class="modal-content">
+        <span onclick='closeModal("add-device-modal")'>&#x2715;</span>
+        <h2>New Device</h2>
+
+        <form
+            hx-post="/add"
+            hx-target="#device-list"
+            hx-swap="outerHTML"
+            hx-on::after-request="this.reset(); closeModal('add-device-modal')"
+        >
+            <input class="input" name="name" placeholder="Device" required maxlength="50">
+            <input class="input" name="mac" placeholder="Mac address" required maxlength="17">
+            <input class="input" name="port" placeholder="Port" required type="number" value="9">
+            <div align="right"><button type="submit" class="action-btn" style="padding: 10px 20px;">Add</button></div>
+        </form>
+    </div>
+</div>

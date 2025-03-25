@@ -1,0 +1,22 @@
+<tbody id="device-list">
+{{#each devices}}
+    <tr>
+        <td>{{Id}}</td>
+        <td>{{Name}}</td>
+        <td>{{Mac}}</td>
+        <td>{{Port}}</td>
+        <td>
+            <div align="right">
+                <button class="action-btn" style="margin-right: 5px;">WAKE-UP</button>
+                <div class="dropdown">
+                    <button class="dropdown-menu-btn" onclick="toggleMenu(this)">⋮</button>
+                    <div class="dropdown-content">
+                        <button onclick="alert('Редактировать {{Device}}')">Редактировать</button>
+                        <button onclick="alert('Удалить')">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+{{/each}}
+</tbody>

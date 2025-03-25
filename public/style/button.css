@@ -1,0 +1,64 @@
+.action-btn {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    opacity: 0.75;
+}
+
+
+.dropdown-menu-btn {
+    background-color: transparent;
+    color: #fff;
+    font-size: 20px;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-menu-btn:hover {
+    opacity: 0.75;
+}
+
+
+.dropdown-content button {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: rgb(110, 110, 110);
+}
+
+
+
+
+
+
+
+
+
+.new-btn {
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 18px;
+    background-color: transparent;
+    border: 1.5px solid rgb(160, 160, 160);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.new-btn:hover {
+    background-color: #007bff;
+}
