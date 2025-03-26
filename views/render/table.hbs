@@ -7,7 +7,13 @@
         <td>{{Data.Port}}</td>
         <td>
             <div align="right">
-                <button class="action-btn" style="margin-right: 5px;">WAKE-UP</button>
+                <button
+                    class="action-btn"
+                    style="margin-right: 5px;"
+                    hx-put="/wol/wake-up/{{Id}}"
+                    hx-swap="none"
+                    hx-on::after-request="toast('WOL отправлен');"
+                >WAKE-UP</button>
                 <div class="dropdown">
                     <button class="dropdown-menu-btn" onclick="toggleMenu(this)">⋮</button>
                     <div class="dropdown-content">

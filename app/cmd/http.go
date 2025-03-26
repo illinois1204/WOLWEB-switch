@@ -8,6 +8,7 @@ import (
 	"github.com/illinois1204/WOLWEB-switch/app/constants"
 	"github.com/illinois1204/WOLWEB-switch/app/modules/crud"
 	"github.com/illinois1204/WOLWEB-switch/app/modules/view"
+	"github.com/illinois1204/WOLWEB-switch/app/modules/wol"
 )
 
 func RunHttpServer() {
@@ -24,6 +25,7 @@ func RunHttpServer() {
 	app.Static("/static", "./public")
 	view.Router(app)
 	crud.Router(app.Group("/manage"))
+	wol.Router(app.Group("/wol"))
 
 	fmt.Println("Application started!")
 	app.Listen(fmt.Sprintf("0.0.0.0:%s", port))
