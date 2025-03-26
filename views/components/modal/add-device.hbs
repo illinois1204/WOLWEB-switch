@@ -4,7 +4,7 @@
         <h2>New Device</h2>
 
         <form
-            hx-post="/add"
+            hx-post="/manage/add"
             hx-target="#device-list"
             hx-swap="outerHTML"
             hx-on::after-request="this.reset(); closeModal('add-device-modal')"

@@ -17,7 +17,7 @@ Return 3 params:
 func ListStoreFiles() ([]string, string, string) {
 	entries, err := os.ReadDir(constants.StoreDir)
 	if err != nil {
-		panic(err)
+		entries = []os.DirEntry{}
 	}
 
 	var files []string
@@ -36,11 +36,11 @@ func ListStoreFiles() ([]string, string, string) {
 	return files, first, last
 }
 
-func GetLastFileIndex(filename string) int {
+func ExtractFileNameIndex(filename string) (uint, error) {
 	index := strings.Split(filename, ".json")[0]
 	numIndex, err := strconv.Atoi(index)
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
-	return numIndex
+	return uint(numIndex), nil
 }

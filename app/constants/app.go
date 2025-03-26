@@ -1,5 +1,7 @@
 package constants
 
 const (
-	StoreDir = "./store"
+	StoreDir      = "./store"
+	FileWriteMode = 0664
+	TabSpace      = "    "
 )
