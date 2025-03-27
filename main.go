@@ -6,10 +6,7 @@ import (
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		panic(err)
-	}
-
+	godotenv.Load()
 	cmd.RunAppInitialization()
 	cmd.RunHttpServer()
 }
