@@ -6,5 +6,5 @@ import (
 )
 
 func Index(c *fiber.Ctx) error {
-	return c.Render("index", fiber.Map{"devices": repository.DeviceStorage}, "layouts/main")
+	return c.Render("index", fiber.Map{"devices": repository.DeviceStorage.ToArray()}, "layouts/main")
 }

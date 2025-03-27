@@ -18,5 +18,5 @@ func RunAppInitialization() {
 		}
 	}
 	service.MakeCounter(int64(lastIndex))
-	repository.Load(fileListSet)
+	repository.DeviceStorage.Load(fileListSet)
 }

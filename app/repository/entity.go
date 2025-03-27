@@ -6,10 +6,11 @@ type Device struct {
 	Port uint16 `form:"port" json:"port"`
 }
 
-type DeviceLoadStub struct {
-	Id   uint
-	File string
-	Data Device
+type IDeviceSet struct {
+	Id uint
+	Device
 }
 
-var DeviceStorage []DeviceLoadStub
+type DeviceLoadStub map[uint]Device
+
+var DeviceStorage = make(DeviceLoadStub)

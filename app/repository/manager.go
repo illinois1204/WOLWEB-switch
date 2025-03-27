@@ -11,7 +11,7 @@ import (
 	"github.com/illinois1204/WOLWEB-switch/app/service"
 )
 
-func Write(object Device) {
+func Write(object Device) (uint, error) {
 	jsonBytes, err := json.MarshalIndent(object, "", constants.TabSpace)
 	if err != nil {
 		panic(err)
@@ -21,17 +21,17 @@ func Write(object Device) {
 	fileName := fmt.Sprintf("%d.json", rowIndex)
 	err = os.WriteFile((constants.StoreDir + "/" + fileName), jsonBytes, constants.FileWriteMode)
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
 
-	DeviceStorage = append(DeviceStorage, DeviceLoadStub{
-		Id:   uint(rowIndex),
-		File: fileName,
-		Data: object,
-	})
+	return uint(rowIndex), nil
 }
 
-func Load(files []string) {
+func (s DeviceLoadStub) Add(key uint, data Device) {
+	s[key] = data
+}
+
+func (s DeviceLoadStub) Load(files []string) {
 	for _, file := range files {
 		rawContent, err := os.ReadFile(constants.StoreDir + "/" + file)
 		if err != nil {
@@ -48,15 +48,11 @@ func Load(files []string) {
 			panic(err)
 		}
 
-		DeviceStorage = append(DeviceStorage, DeviceLoadStub{
-			Id:   rowIndex,
-			File: file,
-			Data: stub,
-		})
+		s[rowIndex] = stub
 	}
 }
 
-func ThreadLoad(files []string) {
+func (s DeviceLoadStub) ThreadLoad(files []string) {
 	var mu sync.Mutex
 	var wg sync.WaitGroup
 	for _, file := range files {
@@ -83,14 +79,19 @@ func ThreadLoad(files []string) {
 			}
 
 			mu.Lock()
-			DeviceStorage = append(DeviceStorage, DeviceLoadStub{
-				Id:   rowIndex,
-				File: file,
-				Data: stub,
-			})
+			s[rowIndex] = stub
 			mu.Unlock()
 		}(file)
 	}
 	wg.Wait()
-	slices.SortFunc(DeviceStorage, func(a, b DeviceLoadStub) int { return int(a.Id) - int(b.Id) })
+}
+
+func (s DeviceLoadStub) ToArray() []IDeviceSet {
+	var arr []IDeviceSet
+	for _key, _val := range s {
+		arr = append(arr, IDeviceSet{Id: _key, Device: _val})
+	}
+
+	slices.SortFunc(arr, func(a, b IDeviceSet) int { return int(a.Id) - int(b.Id) })
+	return arr
 }

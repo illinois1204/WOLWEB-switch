@@ -1,6 +1,7 @@
 package crud
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -14,11 +15,19 @@ func Add(c *fiber.Ctx) error {
 	_port := c.FormValue("port")
 	port, err := strconv.Atoi(_port)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		return c.Status(500).SendString("Oops, something went wrong")
 	}
 
-	repository.Write(repository.Device{Name: _name, Mac: _mac, Port: uint16(port)})
-	return c.Status(201).Render("render/table", fiber.Map{"devices": repository.DeviceStorage})
+	object := repository.Device{Name: _name, Mac: _mac, Port: uint16(port)}
+	index, err := repository.Write(object)
+	if err != nil {
+		fmt.Println(err)
+		return c.Status(500).SendString("Oops, something went wrong")
+	}
+	repository.DeviceStorage.Add(index, object)
+
+	return c.Status(201).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }
 
 // var d Device
