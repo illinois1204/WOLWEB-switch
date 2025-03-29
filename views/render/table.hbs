@@ -18,7 +18,11 @@
                     <button class="dropdown-menu-btn" onclick="toggleMenu(this)">⋮</button>
                     <div class="dropdown-content">
                         <button onclick="alert('Редактировать {{Device}}')">Редактировать</button>
-                        <button onclick="alert('Удалить')">Удалить</button>
+                        <button
+                            hx-delete="/manage/remove/{{Id}}"
+                            hx-target="#device-list"
+                            hx-swap="outerHTML"
+                        >Удалить</button>
                     </div>
                 </div>
             </div>

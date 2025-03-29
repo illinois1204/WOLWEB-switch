@@ -86,6 +86,11 @@ func (s DeviceLoadStub) ThreadLoad(files []string) {
 	wg.Wait()
 }
 
+func (s DeviceLoadStub) Remove(id uint) {
+	delete(s, id)
+	os.Remove(fmt.Sprintf("%s/%d.json", constants.StoreDir, id))
+}
+
 func (s DeviceLoadStub) ToArray() []IDeviceSet {
 	var arr []IDeviceSet
 	for _key, _val := range s {

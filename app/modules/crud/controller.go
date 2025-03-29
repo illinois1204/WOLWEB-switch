@@ -30,6 +30,17 @@ func Add(c *fiber.Ctx) error {
 	return c.Status(201).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }
 
+func Remove(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		fmt.Println(err)
+		return c.Status(500).SendString("Oops, something went wrong")
+	}
+
+	repository.DeviceStorage.Remove(uint(id))
+	return c.Status(200).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
+}
+
 // var d Device
 // if err := c.BodyParser(&d); err != nil {
 // 	return err
