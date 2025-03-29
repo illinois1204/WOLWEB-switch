@@ -42,23 +42,16 @@
 }
 
 
-
-
-
-
-
-
-
-.new-btn {
+.nav-btn {
     color: #fff;
     font-size: 16px;
     padding: 10px 18px;
     background-color: transparent;
     border: 1.5px solid rgb(160, 160, 160);
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.new-btn:hover {
+.nav-btn:hover {
     background-color: #007bff;
 }

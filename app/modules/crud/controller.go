@@ -25,8 +25,8 @@ func Add(c *fiber.Ctx) error {
 		fmt.Println(err)
 		return c.Status(500).SendString("Oops, something went wrong")
 	}
-	repository.DeviceStorage.Add(index, object)
 
+	repository.DeviceStorage.Add(index, object)
 	return c.Status(201).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }
 

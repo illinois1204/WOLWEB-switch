@@ -2,6 +2,7 @@ package service
 
 import (
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -27,6 +28,12 @@ func ListStoreFiles() ([]string, string, string) {
 		}
 	}
 
+	sort.Slice(files, func(i, j int) bool {
+		_Iindex, _ := ExtractFileNameIndex(files[i])
+		_Jindex, _ := ExtractFileNameIndex(files[j])
+		return _Iindex < _Jindex
+	})
+
 	var first, last string
 	if len(files) > 0 {
 		first = files[0]
@@ -37,7 +44,7 @@ func ListStoreFiles() ([]string, string, string) {
 }
 
 func ExtractFileNameIndex(filename string) (uint, error) {
-	index := strings.Split(filename, ".json")[0]
+	index := strings.TrimSuffix(filename, ".json")
 	numIndex, err := strconv.Atoi(index)
 	if err != nil {
 		return 0, err
