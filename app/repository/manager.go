@@ -14,7 +14,7 @@ import (
 func Write(object Device) (uint, error) {
 	jsonBytes, err := json.MarshalIndent(object, "", constants.TabSpace)
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
 
 	rowIndex := service.Next()
@@ -84,6 +84,22 @@ func (s DeviceLoadStub) ThreadLoad(files []string) {
 		}(file)
 	}
 	wg.Wait()
+}
+
+func (s DeviceLoadStub) Update(id uint, payload Device) error {
+	jsonBytes, err := json.MarshalIndent(payload, "", constants.TabSpace)
+	if err != nil {
+		return err
+	}
+
+	fileName := fmt.Sprintf("%d.json", id)
+	err = os.WriteFile((constants.StoreDir + "/" + fileName), jsonBytes, constants.FileWriteMode)
+	if err != nil {
+		return err
+	}
+
+	s[id] = payload
+	return nil	
 }
 
 func (s DeviceLoadStub) Remove(id uint) {

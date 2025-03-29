@@ -17,7 +17,13 @@
                 <div class="dropdown">
                     <button class="dropdown-menu-btn" onclick="toggleMenu(this)">⋮</button>
                     <div class="dropdown-content">
-                        <button onclick="alert('Редактировать {{Device}}')">Редактировать</button>
+                        <button onclick="openFillModel('edit-device-modal', {
+                                id: '{{Id}}',
+                                name: '{{Device.Name}}',
+                                mac: '{{Device.Mac}}',
+                                port: '{{Device.Port}}'
+                            })"
+                        >Редактировать</button>
                         <button
                             hx-delete="/manage/remove/{{Id}}"
                             hx-target="#device-list"

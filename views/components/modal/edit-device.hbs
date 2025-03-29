@@ -1,0 +1,19 @@
+<div id="edit-device-modal" class="modal">
+    <div class="modal-content">
+        <span onclick='closeModal("edit-device-modal")'>&#x2715;</span>
+        <h2>Edit Device</h2>
+
+        <form
+            hx-patch="/manage/update"
+            hx-target="#device-list"
+            hx-swap="outerHTML"
+            hx-on::after-request="closeModal('edit-device-modal')"
+        >
+            <input id="edit-device-input-id" type="hidden" name="id">
+            <input id="edit-device-input-name" class="input" name="name" placeholder="Device" required maxlength="50">
+            <input id="edit-device-input-mac" class="input" name="mac" placeholder="Mac address" required maxlength="17">
+            <input id="edit-device-input-port" class="input" name="port" placeholder="Port" required type="number">
+            <div align="right"><button type="submit" class="action-btn" style="padding: 10px 20px;">Save</button></div>
+        </form>
+    </div>
+</div>
