@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/illinois1204/WOLWEB-switch/app/middleware"
 	"github.com/illinois1204/WOLWEB-switch/app/repository"
 )
 
@@ -27,6 +28,8 @@ func Add(c *fiber.Ctx) error {
 	}
 
 	repository.DeviceStorage.Add(index, object)
+
+	c.Cookie(middleware.MakeCookie())
 	return c.Status(201).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }
 
@@ -46,6 +49,7 @@ func Update(c *fiber.Ctx) error {
 		return c.Status(500).SendString("Oops, something went wrong")
 	}
 
+	c.Cookie(middleware.MakeCookie())
 	return c.Status(200).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }
 
@@ -57,5 +61,7 @@ func Remove(c *fiber.Ctx) error {
 	}
 
 	repository.DeviceStorage.Remove(uint(id))
+
+	c.Cookie(middleware.MakeCookie())
 	return c.Status(200).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }

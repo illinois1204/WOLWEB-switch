@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/handlebars/v2"
 	"github.com/illinois1204/WOLWEB-switch/app/constants"
+	"github.com/illinois1204/WOLWEB-switch/app/modules/auth"
 	"github.com/illinois1204/WOLWEB-switch/app/modules/crud"
 	"github.com/illinois1204/WOLWEB-switch/app/modules/view"
 	"github.com/illinois1204/WOLWEB-switch/app/modules/wol"
@@ -24,6 +25,7 @@ func RunHttpServer() {
 
 	app.Static("/static", "./public")
 	view.Router(app)
+	auth.Router(app)
 	crud.Router(app.Group("/manage"))
 	wol.Router(app.Group("/wol"))
 

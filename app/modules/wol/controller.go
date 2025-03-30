@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/illinois1204/WOLWEB-switch/app/middleware"
 	"github.com/illinois1204/WOLWEB-switch/app/repository"
 	"github.com/illinois1204/WOLWEB-switch/app/service"
 )
@@ -20,5 +21,7 @@ func WakeUp(c *fiber.Ctx) error {
 	if err := service.WakeUp(device.Mac, device.Port); err != nil {
 		fmt.Printf("WOL sending error. Detail:\n%v\n", err)
 	}
+
+	c.Cookie(middleware.MakeCookie())
 	return c.SendStatus(204)
 }
