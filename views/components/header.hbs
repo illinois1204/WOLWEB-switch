@@ -4,6 +4,6 @@
     <div style="display: flex; gap: 10px;">
         <button class="nav-btn" onclick="openModal('add-device-modal')">+ New</button>
         <button class="nav-btn">Export</button>
-        <button class="nav-btn">Logout</button>
+        <button class="nav-btn" hx-delete="/sign-out" hx-swap="none">Logout</button>
     </div>
 </div>

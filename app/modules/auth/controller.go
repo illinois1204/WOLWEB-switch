@@ -23,3 +23,9 @@ func SignIn(c *fiber.Ctx) error {
 	c.Cookie(middleware.MakeCookie())
 	return c.Redirect("/", fiber.StatusMovedPermanently)
 }
+
+func SignOut(c *fiber.Ctx) error {
+	c.ClearCookie(constants.CookieName)
+	c.Set("HX-Redirect", "/login")
+	return c.SendStatus(204)
+}
