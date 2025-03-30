@@ -25,6 +25,6 @@ func MakeCookie() *fiber.Cookie {
 	cookie.Value = constants.AppEnv.CookieSecret
 	cookie.HTTPOnly = true
 	cookie.MaxAge = constants.AppEnv.CookieTTL
-	
+
 	return cookie
 }

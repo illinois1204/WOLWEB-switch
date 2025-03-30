@@ -99,7 +99,7 @@ func (s DeviceLoadStub) Update(id uint, payload Device) error {
 	}
 
 	s[id] = payload
-	return nil	
+	return nil
 }
 
 func (s DeviceLoadStub) Remove(id uint) {

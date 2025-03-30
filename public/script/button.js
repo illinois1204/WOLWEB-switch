@@ -1,8 +1,3 @@
-// function closeMenu(element) {
-//   const dropdown = element.closest('.dropdown');
-//   if (dropdown) dropdown.classList.remove('open');
-// }
-
 function toggleMenu(button) {
   const dropdown = button.parentElement;
   dropdown.classList.toggle("open");
