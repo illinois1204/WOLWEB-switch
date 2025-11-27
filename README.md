@@ -33,6 +33,10 @@ PASSWORD = enter here
 
 ## Docker run
 When start container with `docker run` set option:  
+Network mounted on host (required)
+```sh
+--net=host
+```
 Volume for persistent (optional)
 ```sh
 -v host_path:/app/store
