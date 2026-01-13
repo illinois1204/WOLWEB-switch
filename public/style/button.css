@@ -50,8 +50,11 @@
     border: 1.5px solid rgb(160, 160, 160);
     border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .nav-btn:hover {
     background-color: #007bff;
+    text-decoration: none;
 }

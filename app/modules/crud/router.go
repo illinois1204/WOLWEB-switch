@@ -9,4 +9,5 @@ func Router(router fiber.Router) {
 	router.Post("/add", middleware.UseCookie, Add)
 	router.Patch("/update", middleware.UseCookie, Update)
 	router.Delete("/remove/:id<int16>", middleware.UseCookie, Remove)
+	router.Get("/export", middleware.UseCookie, Export)
 }
