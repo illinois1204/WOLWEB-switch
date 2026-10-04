@@ -77,8 +77,8 @@ func Remove(c *fiber.Ctx) error {
 func Export(c *fiber.Ctx) error {
 	list, _, _ := service.ListStoreFiles()
 	if len(list) == 0 {
-		// TODO: make browser alert or better view response
-		return c.Status(204).SendString("No files to export")
+		c.Set("Content-Type", "text/html; charset=utf-8")
+		return c.SendString("<script>alert('Нет файлов для экспорта'); history.back();</script>")
 	}
 
 	var buf bytes.Buffer
