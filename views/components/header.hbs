@@ -3,7 +3,19 @@
 
     <div style="display: flex; gap: 10px;">
         <button class="nav-btn" onclick="openModal('add-device-modal')">+ New</button>
-        <button class="nav-btn">Import</button>
+        <button class="nav-btn" onclick="document.getElementById('import-file-input').click()">Import</button>
+        <input
+            id="import-file-input"
+            type="file"
+            name="file"
+            accept=".tar,application/x-tar"
+            style="display: none;"
+            hx-post="/manage/import"
+            hx-encoding="multipart/form-data"
+            hx-target="#device-list"
+            hx-swap="outerHTML"
+            hx-on::after-request="this.value=''; toast('Импорт завершён');"
+        />
         <a class="nav-btn" href="/manage/export">Export</a>
         <button class="nav-btn" hx-delete="/sign-out" hx-swap="none">Logout</button>
     </div>

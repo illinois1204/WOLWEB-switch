@@ -3,9 +3,11 @@ package crud
 import (
 	"archive/tar"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -115,7 +117,7 @@ func Export(c *fiber.Ctx) error {
 		if _, err := io.Copy(tarWriter, f); err != nil {
 			return handledGoneExit()
 		}
-		
+
 		f.Close()
 	}
 
@@ -125,4 +127,66 @@ func Export(c *fiber.Ctx) error {
 
 	tarWriter.Close()
 	return c.SendStream(bytes.NewReader(buf.Bytes()))
+}
+
+func Import(c *fiber.Ctx) error {
+	fileHeader, err := c.FormFile("file")
+	if err != nil {
+		fmt.Println(err)
+		return c.Status(400).SendString("Archive file is required")
+	}
+
+	f, err := fileHeader.Open()
+	if err != nil {
+		fmt.Println(err)
+		return c.Status(500).SendString("Oops, something went wrong")
+	}
+	defer f.Close()
+
+	tarReader := tar.NewReader(f)
+	for {
+		header, err := tarReader.Next()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			fmt.Println(err)
+			return c.Status(400).SendString("Invalid archive")
+		}
+
+		if header.Typeflag != tar.TypeReg {
+			continue
+		}
+
+		// Only accept plain "<index>.json" entries to avoid path traversal.
+		name := filepath.Base(header.Name)
+		if name != header.Name || filepath.Ext(name) != ".json" {
+			continue
+		}
+
+		index, err := service.ExtractFileNameIndex(name)
+		if err != nil {
+			continue
+		}
+
+		rawContent, err := io.ReadAll(tarReader)
+		if err != nil {
+			fmt.Println(err)
+			return c.Status(500).SendString("Oops, something went wrong")
+		}
+
+		device := repository.Device{}
+		if err := json.Unmarshal(rawContent, &device); err != nil {
+			continue
+		}
+
+		if err := os.WriteFile(fmt.Sprintf("%s/%s", constants.StoreDir, name), rawContent, constants.FileWriteMode); err != nil {
+			fmt.Println(err)
+			return c.Status(500).SendString("Oops, something went wrong")
+		}
+
+		repository.DeviceStorage.Add(index, device)
+	}
+
+	return c.Status(200).Render("render/table", fiber.Map{"devices": repository.DeviceStorage.ToArray()})
 }
